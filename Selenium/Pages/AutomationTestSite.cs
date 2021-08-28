@@ -12,12 +12,21 @@ namespace Selenium.Pages
     {
         public PageName PageName;
         public string BaseUrl;
-        private ChromeDriver WebDriver;
+        public IWebDriver WebDriver;
         private Collection<TestPage> Pages;
 
-        public AutomationTestSite()
+        public AutomationTestSite(string browser)
         {
-            WebDriver = new ChromeDriver();
+            switch (browser.ToLower())
+            {
+                case "chrome":
+                WebDriver = new ChromeDriver();
+                    break;
+                default:
+                    WebDriver = new ChromeDriver();
+                    break;
+            }
+
             BaseUrl = "http://automationpractice.com/index.php";
             Pages = InitializePages();
         }
@@ -36,6 +45,7 @@ namespace Selenium.Pages
         public void GoTo()
         {
             WebDriver.Navigate().GoToUrl(BaseUrl);
+            WebDriver.Manage().Window.Maximize();
         }
 
         public bool PageLoaded()
@@ -98,6 +108,20 @@ namespace Selenium.Pages
                 }
             }
             throw new InvalidSelectorException($"{element} option of {optionToSelect} not found");
+        }
+
+        public string getTextOfATextBox(PageName pageName, Element element)
+        {
+            var locator = GetPage(pageName).GetLocator(element);
+            string elementText = WebDriver.FindElement(locator.FindBy).GetAttribute("value");
+            return elementText;
+        }
+
+        public string getTextOfAnElement(PageName pageName, Element element)
+        {
+            var locator = GetPage(pageName).GetLocator(element);
+            string elementText = WebDriver.FindElement(locator.FindBy).Text;
+            return elementText;
         }
 
         public void Dispose()

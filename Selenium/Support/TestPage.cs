@@ -8,13 +8,13 @@ namespace Selenium.Support
     public abstract class TestPage
     {
         public PageName Name { get; protected set; }
-        protected ChromeDriver WebDriver;
+        protected IWebDriver WebDriver;
         protected Collection<Locator> Locators;
         public string Url { get; protected set; }
 
         protected void Setup(IWebDriver webDriver)
         {
-            WebDriver = (ChromeDriver)webDriver;
+            WebDriver = webDriver;
             Locators = InitializeLocators();
         }
 
