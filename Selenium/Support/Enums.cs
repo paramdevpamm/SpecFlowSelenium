@@ -5,7 +5,8 @@ public enum PageName
     Home,
     SignIn,
     CreateAccount,
-    MyAccount
+    MyAccount,
+    swagLab
 }
 
 public enum Element
@@ -34,7 +35,20 @@ public enum Element
     MobilePhone,
     AddressAlias,
     RegisterButton,
-    SignOutLink
+    SignOutLink,
+    swagLabUserName,
+    swagLabPassword,
+    swagLabLoginButton,
+    swaglabLoginErrorText,
+    swagLabLoginHeader,
+    swagLabInventoryItemName,
+    swagLabShoppingCartContainer,
+    swagLabAddToCartBackPack,
+    swagLabAddToCartBikeLight,
+    swagLabAddToCartBoltTShirt,
+    swagLabAddToCartFleeceJacket,
+    swagLabAddToCartOnesie,
+    swagLabAddTShirtRed,
 }
 
 public enum Title

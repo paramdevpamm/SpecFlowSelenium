@@ -38,13 +38,20 @@ namespace Selenium.Pages
 				new HomePage(WebDriver),
 				new SignInPage(WebDriver),
 				new CreateAccountPage(WebDriver),
-                new MyAccountPage(WebDriver)
+                new MyAccountPage(WebDriver),
+                new swagLab(WebDriver),
             };
         }
 
         public void GoTo()
         {
             WebDriver.Navigate().GoToUrl(BaseUrl);
+            WebDriver.Manage().Window.Maximize();
+        }
+
+        public void GoToGivenURL(string url)
+        {
+            WebDriver.Navigate().GoToUrl(url);
             WebDriver.Manage().Window.Maximize();
         }
 
@@ -92,6 +99,7 @@ namespace Selenium.Pages
         public void EnterTextIntoInputField(PageName pageName, Element element, string text)
         {
             var locator = GetPage(pageName).GetLocator(element);
+            WebDriver.FindElement(locator.FindBy).Clear();
             WebDriver.FindElement(locator.FindBy).SendKeys(text);
         }
 
@@ -110,6 +118,11 @@ namespace Selenium.Pages
             throw new InvalidSelectorException($"{element} option of {optionToSelect} not found");
         }
 
+        public string getPageTitle()
+        {
+            string pageTitle = WebDriver.Title;
+            return pageTitle;
+        }
         public string getTextOfATextBox(PageName pageName, Element element)
         {
             var locator = GetPage(pageName).GetLocator(element);
@@ -123,6 +136,31 @@ namespace Selenium.Pages
             string elementText = WebDriver.FindElement(locator.FindBy).Text;
             return elementText;
         }
+
+        public bool getStatusOfCheckBox(PageName pageName, Element element)
+        {
+            var locator = GetPage(pageName).GetLocator(element);
+            bool checkBoxStatus = WebDriver.FindElement(locator.FindBy).Selected;
+            return checkBoxStatus;
+        }
+
+        public string getCurrentURL()
+        {
+            return WebDriver.Url;
+        }
+
+        public int getNumberOfItems(PageName pageName, Element element)
+        {
+            var locator = GetPage(pageName).GetLocator(element);
+            int count = WebDriver.FindElements(locator.FindBy).Count;
+            return count;
+        }
+
+        //public void clickOnDynamicXpathText(PageName pageName, string dynamicXpath)
+        //{
+        //    WebDriver.FindElement(By.XPath("//span[contains(text(),'+ {dynamicXpath}+')])");
+
+        //}
 
         public void Dispose()
         {
